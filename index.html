@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body> 
+        <section id="morpion"></section>
+        <p id="msg"></p>
+        <button id="restart">Restart</button>
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+        
+        <script src="class/Morpion.class.js"></script>
+        <script>
+
+            function clickHandler(){
+            
+                $(this).html(morpion.playCell($(this).attr("id")))
+                $(this).off("click")
+
+                if(morpion.hasWinner()){
+                    $("#msg").html("Joueur "+morpion.joueurActuel.symbol+" a gagné !!")
+                    $(".case").off("click")
+                    $("#restart").show()
+                }
+                else if(morpion.isDraw()){
+                    $("#msg").html("Match nul, les gars !!")
+                    $("#restart").show()
+                }
+                else{
+                    morpion.alternate()
+                    $("#msg").html("C'est à "+morpion.joueurActuel.symbol+" de jouer !");
+                }
+            }
+            
+            let morpion = new Morpion("X", "O", 3);
+            
+            $(document).ready(function(){
+                $("#msg").html("BIENVENUE : C'est à "+morpion.joueurActuel.symbol+" de jouer !");
+                
+                $("#morpion").html(morpion.renderDiv())
+                $("#restart").hide()
+                $(".case").on("click", clickHandler)
+            })
+            
+            
+            $("#restart").on("click", function(){
+                morpion.init()
+                $("#morpion").html(morpion.renderDiv())
+                $(".case").on("click", clickHandler)
+                $("#msg").html("Maintenant, c'est à "+morpion.joueurActuel.symbol+" de jouer, prends ta revanche !")
+            })
+        
+        </script>
+    </body>
+
+</html>

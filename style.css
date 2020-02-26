@@ -1,0 +1,26 @@
+*{
+	box-sizing: border-box;
+}
+
+#grille{
+	
+	
+	display: flex;
+	flex-wrap: wrap;
+	margin: auto;
+}
+
+.case{
+	
+	width: 6rem;/*16px * 6 = 96px*/
+	height: 6rem;
+	line-height: 6rem;
+	border: 1px solid #888;
+	text-align: center;
+	font-size: 3rem;/*16px x 3 = 48px = 1em*/
+	
+}
+
+.joueur1{
+    background-color: yellow;
+}
