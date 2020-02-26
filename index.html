@@ -35,25 +35,25 @@
                     $(".total").html("<h2>score "+morpion.joueur1.symbol+" est de : </h2>"+"<div>"+ morpion.joueur1.renderScore()+"</div>")
                     $(".total1").html("<h2>score "+morpion.joueur2.symbol+" est de : </h2>"+"<div>"+ morpion.joueur2.renderScore()+"</div>")
                     $("#restart").show()
-                    $(".score").html(morpion.joueurActuel.renderScore())
+                   
                     if(morpion.joueurActuel.symbol == "X"){
-                        $(".joueur").addClass("win")
-                        $(".joueur1").removeClass("win")
+                        $(".total").addClass("win")
+                        $(".total1").removeClass("win")
                     } 
                     else{
-                        $(".joueur1").addClass("win")
-                        $(".joueur").removeClass("win")
+                        $(".total1").addClass("win")
+                        $(".total").removeClass("win")
                     }   
                 }
                 else if(morpion.isDraw()){
                     $("#msg").html("Match nul, les gars !!")
                     $("#restart").show()
-                    $(".score").html(morpion.joueurActuel.renderScore())
+                   
                 }
                 else{
                     morpion.alternate()
                     $("#msg").html("C'est à "+morpion.joueurActuel.symbol+" de jouer !");
-                    $(".score").html(morpion.joueurActuel.renderScore())
+                   
                     if(morpion.joueurActuel.symbol == "X"){
                         $(".joueur").addClass("active")
                         $(".joueur1").removeClass("active")
