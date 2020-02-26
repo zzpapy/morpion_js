@@ -6,9 +6,16 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body> 
-        <section id="morpion"></section>
-        <p id="msg"></p>
-        <button id="restart">Restart</button>
+        <div class="container">
+            <div class="total joueur"></div>
+            <section id="morpion"></section>
+            <div class="total1 joueur1"></div>
+        </div>
+        <div class="recap">
+            <div><p id="msg"></p></div>
+            <div class="score"></div>
+            <button id="restart">Restart</button>
+        </div>
         <script
             src="https://code.jquery.com/jquery-3.4.1.min.js"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -20,20 +27,41 @@
             function clickHandler(){
             
                 $(this).html(morpion.playCell($(this).attr("id")))
+                $(this).addClass("anim")
                 $(this).off("click")
-
                 if(morpion.hasWinner()){
                     $("#msg").html("Joueur "+morpion.joueurActuel.symbol+" a gagné !!")
                     $(".case").off("click")
+                    $(".total").html("<h2>score "+morpion.joueur1.symbol+" est de : </h2>"+"<div>"+ morpion.joueur1.renderScore()+"</div>")
+                    $(".total1").html("<h2>score "+morpion.joueur2.symbol+" est de : </h2>"+"<div>"+ morpion.joueur2.renderScore()+"</div>")
                     $("#restart").show()
+                    $(".score").html(morpion.joueurActuel.renderScore())
+                    if(morpion.joueurActuel.symbol == "X"){
+                        $(".joueur").addClass("win")
+                        $(".joueur1").removeClass("win")
+                    } 
+                    else{
+                        $(".joueur1").addClass("win")
+                        $(".joueur").removeClass("win")
+                    }   
                 }
                 else if(morpion.isDraw()){
                     $("#msg").html("Match nul, les gars !!")
                     $("#restart").show()
+                    $(".score").html(morpion.joueurActuel.renderScore())
                 }
                 else{
                     morpion.alternate()
                     $("#msg").html("C'est à "+morpion.joueurActuel.symbol+" de jouer !");
+                    $(".score").html(morpion.joueurActuel.renderScore())
+                    if(morpion.joueurActuel.symbol == "X"){
+                        $(".joueur").addClass("active")
+                        $(".joueur1").removeClass("active")
+                    } 
+                    else{
+                        $(".joueur1").addClass("active")
+                        $(".joueur").removeClass("active")
+                    }                  
                 }
             }
             
@@ -41,8 +69,19 @@
             
             $(document).ready(function(){
                 $("#msg").html("BIENVENUE : C'est à "+morpion.joueurActuel.symbol+" de jouer !");
+                if(morpion.joueurActuel.symbol == "X"){
+                    $(".joueur").addClass("active")
+                    $(".joueur1").removeClass("active")
+                } 
+                else{
+                    $(".joueur1").addClass("active")
+                    $(".joueur").removeClass("active")
+                }       
+                
                 
                 $("#morpion").html(morpion.renderDiv())
+                $(".total").html("<h2>score "+morpion.joueur1.symbol+" est de : </h2>"+"<div>"+ morpion.joueur1.renderScore()+"</div>")
+                $(".total1").html("<h2>score "+morpion.joueur2.symbol+" est de : </h2>"+"<div>"+ morpion.joueur2.renderScore()+"</div>")
                 $("#restart").hide()
                 $(".case").on("click", clickHandler)
             })
@@ -50,6 +89,15 @@
             
             $("#restart").on("click", function(){
                 morpion.init()
+                if(morpion.joueurActuel.symbol == "X"){
+                    $(".joueur").addClass("active")
+                    $(".joueur1").removeClass("active")
+                } 
+                else{
+                    $(".joueur1").addClass("active")
+                    $(".joueur").removeClass("active")
+                }       
+                
                 $("#morpion").html(morpion.renderDiv())
                 $(".case").on("click", clickHandler)
                 $("#msg").html("Maintenant, c'est à "+morpion.joueurActuel.symbol+" de jouer, prends ta revanche !")

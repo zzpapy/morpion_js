@@ -5,7 +5,12 @@ class Joueur{
         
         this.symbol = symbol
         this.className = className
+        this.score = 0
     }
+    renderScore(){
+        return this.score
+    }
+    
 }
 
 class Morpion{
@@ -33,6 +38,9 @@ class Morpion{
             }
             
         }
+    }
+    plusScore(){
+            return this.joueurActuel.score++
     }
     
     renderDiv(){
@@ -91,25 +99,25 @@ class Morpion{
             }
             
             if(ligne == pattern || colonne == pattern){
+                this.plusScore()
                 return true;
             }
         }
         
         if(diag1 == pattern || diag2 == pattern){
-
+            this.plusScore()
             return true;
         }
-        
         return false;
     }
     
     isDraw(){
-        let draw = true
-        
-        if(this.grid.indexOf("")){
-            draw =  false
+        for(var key in this.grid){
+            if(this.grid[key] == ""){
+                return false
+            }
         }
-        return draw
+        return true
     }
 }
            
